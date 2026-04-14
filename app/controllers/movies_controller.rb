@@ -2,6 +2,10 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
+    
+    if params[:rating].present?
+      @movies = @movies.where(rating: params[:rating].to_i)
+    end
   end
 
   def new

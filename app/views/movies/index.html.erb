@@ -5,6 +5,22 @@
       style: "padding: 8px 16px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; display: inline-block;" %>
 </p>
 
+<div style="margin-bottom: 20px;">
+  <form method="get" action="<%= movies_path %>" style="display: inline;">
+    <label style="margin-right: 10px;">Filter by Rating:</label>
+    <select name="rating" style="padding: 6px; border-radius: 4px; border: 1px solid #ddd;">
+      <option value="">All Ratings</option>
+      <option value="0" <%= 'selected' if params[:rating].to_i == 0 %>>0</option>
+      <option value="1" <%= 'selected' if params[:rating].to_i == 1 %>>1</option>
+      <option value="2" <%= 'selected' if params[:rating].to_i == 2 %>>2</option>
+      <option value="3" <%= 'selected' if params[:rating].to_i == 3 %>>3</option>
+      <option value="4" <%= 'selected' if params[:rating].to_i == 4 %>>4</option>
+      <option value="5" <%= 'selected' if params[:rating].to_i == 5 %>>5</option>
+    </select>
+    <input type="submit" value="Filter" style="padding: 6px 12px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px;" />
+  </form>
+</div>
+
 <% if @movies.any? %>
   <ul style="list-style: none; padding: 0;">
     <% @movies.each do |movie| %>
