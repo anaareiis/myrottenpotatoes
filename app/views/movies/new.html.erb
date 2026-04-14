@@ -1,0 +1,25 @@
+<h1>Add New Movie</h1>
+
+<%= form_with model: @movie do |f| %>
+
+  <p>
+    Title: <%= f.text_field :title %>
+  </p>
+
+  <p>
+    Rating: <%= f.text_field :rating %>
+  </p>
+
+  <p>
+    Description: <%= f.text_area :description %>
+  </p>
+
+  <p>
+    Release Date: <%= f.date_select :release_date %>
+  </p>
+
+  <p>
+    <%= f.submit "Save Movie" %>
+  </p>
+
+<% end %>
