@@ -1,21 +1,35 @@
 <h1>All Movies</h1>
 
 <p>
-  <%= link_to "Add New Movie", new_movie_path, style: "padding: 8px 16px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; display: inline-block;" %>
+  <%= link_to "Add New Movie", new_movie_path, 
+      style: "padding: 8px 16px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; display: inline-block;" %>
 </p>
 
 <% if @movies.any? %>
   <ul style="list-style: none; padding: 0;">
     <% @movies.each do |movie| %>
-      <li style="padding: 10px; border-bottom: 1px solid #ddd;">
-        <strong><%= movie.title %></strong> - Rating: <%= movie.rating %>
+      <li style="padding: 12px; border-bottom: 1px solid #ddd;">
+
+        <strong style="font-size: 18px;">
+          <%= link_to movie.title, movie_path(movie), style: "text-decoration: none; color: #333;" %>
+        </strong>
+
+        <p style="margin: 5px 0;">
+          <strong>Rating:</strong> <%= movie.rating %>
+        </p>
+
         <% if movie.description.present? %>
-          <br/>
-          <small style="color: #666;"><%= truncate(movie.description, length: 100) %></small>
+          <p style="margin: 5px 0; color: #666;">
+            <%= truncate(movie.description, length: 100) %>
+          </p>
         <% end %>
+
       </li>
     <% end %>
   </ul>
 <% else %>
-  <p>No movies available. <%= link_to "Create one now!", new_movie_path %></p>
+  <p>
+    No movies available. 
+    <%= link_to "Create one now!", new_movie_path %>
+  </p>
 <% end %>
