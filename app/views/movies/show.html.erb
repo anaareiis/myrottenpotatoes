@@ -17,5 +17,26 @@
 
 <div style="margin-top: 20px;">
   <%= link_to "Edit", edit_movie_path(@movie), style: "padding: 8px 16px; background-color: #ffc107; color: black; text-decoration: none; border-radius: 4px; display: inline-block; margin-right: 10px;" %>
+  <%= button_to "Delete", movie_path(@movie), 
+      method: :delete,
+      data: { confirm: "Are you sure?" },
+      form: { style: "display: inline;" },
+      class: "delete-btn" %>
   <%= link_to "Back to Movies", movies_path, style: "padding: 8px 16px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; display: inline-block;" %>
 </div>
+
+<style>
+  .delete-btn {
+    padding: 8px 16px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .delete-btn:hover {
+    background-color: #c82333;
+  }
+</style>
