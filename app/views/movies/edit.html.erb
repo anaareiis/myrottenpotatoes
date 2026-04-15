@@ -14,23 +14,26 @@
 
   <%= form_with model: @movie do |f| %>
     <div style="margin-bottom: 18px;">
-      <label><strong>🎬 Movie Title</strong></label>
-      <%= f.text_field :title, placeholder: "Enter movie title" %>
+      <label><strong>🎬 Movie Title</strong> (2-200 characters)</label>
+      <%= f.text_field :title, placeholder: "Enter movie title", required: true, minlength: 2, maxlength: 200 %>
     </div>
 
     <div style="margin-bottom: 18px;">
-      <label><strong>⭐ Rating</strong></label>
-      <%= f.select :rating, (0..5).to_a %>
+      <label><strong>⭐ Rating</strong> (required)</label>
+      <%= f.select :rating, (0..5).to_a, {}, required: true %>
     </div>
 
     <div style="margin-bottom: 18px;">
-      <label><strong>📝 Description</strong></label>
-      <%= f.text_area :description, placeholder: "Describe the movie...", style: "min-height: 130px;" %>
+      <label><strong>📝 Description</strong> (10-1000 characters)</label>
+      <%= f.text_area :description, placeholder: "Describe the movie (minimum 10 characters)...", style: "min-height: 130px;", required: true, minlength: 10, maxlength: 1000 %>
+      <small style="color: #666; display: block; margin-top: 5px;">
+        <span id="char-count"><%= @movie.description.length %></span>/1000 characters
+      </small>
     </div>
 
     <div style="margin-bottom: 18px;">
-      <label><strong>📅 Release Date</strong></label>
-      <%= f.date_select :release_date %>
+      <label><strong>📅 Release Date</strong> (required, cannot be in the future)</label>
+      <%= f.date_field :release_date, required: true, max: Date.today.to_s %>
     </div>
 
     <div style="margin-top: 25px; display: flex; gap: 10px;">
@@ -39,3 +42,25 @@
     </div>
   <% end %>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const descriptionField = document.querySelector('textarea[name="movie[description]"]');
+    const charCount = document.getElementById('char-count');
+    
+    if (descriptionField && charCount) {
+      descriptionField.addEventListener('input', function() {
+        charCount.textContent = this.value.length;
+        
+        // Visual feedback
+        if (this.value.length < 10) {
+          charCount.style.color = '#dc3545';
+        } else if (this.value.length > 900) {
+          charCount.style.color = '#ffc107';
+        } else {
+          charCount.style.color = '#28a745';
+        }
+      });
+    }
+  });
+</script>
