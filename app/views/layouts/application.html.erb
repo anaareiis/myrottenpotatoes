@@ -1,29 +1,222 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Myrottenpotatoes</title>
+    <title>MyRottenPotatoes</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <style>
-      body { font-family: Arial, sans-serif; margin: 20px; }
-      .alert { padding: 15px; margin-bottom: 20px; border-radius: 4px; }
-      .alert-notice { background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
-      .alert-alert { background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px 0;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      header h1 {
+        font-size: 28px;
+        margin: 0;
+        font-weight: 600;
+      }
+
+      .main-content {
+        padding: 30px 20px;
+      }
+
+      .alert {
+        padding: 16px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+        border-left: 4px solid;
+        font-weight: 500;
+        animation: slideDown 0.4s ease-out;
+      }
+
+      @keyframes slideDown {
+        from {
+          transform: translateY(-20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .alert-notice {
+        background-color: #d4edda;
+        border-color: #28a745;
+        color: #155724;
+      }
+
+      .alert-alert {
+        background-color: #f8d7da;
+        border-color: #dc3545;
+        color: #721c24;
+      }
+
+      h1 {
+        margin-bottom: 25px;
+        color: #333;
+        font-size: 32px;
+        font-weight: 700;
+      }
+
+      h2 {
+        margin-bottom: 15px;
+        color: #333;
+        font-size: 24px;
+      }
+
+      .btn, button, input[type="submit"] {
+        padding: 10px 18px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: inline-block;
+        text-decoration: none;
+      }
+
+      .btn-primary, input[type="submit"] {
+        background-color: #007bff;
+        color: white;
+      }
+
+      .btn-primary:hover, input[type="submit"]:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,123,255,0.4);
+      }
+
+      .btn-success {
+        background-color: #28a745;
+        color: white;
+      }
+
+      .btn-success:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(40,167,69,0.4);
+      }
+
+      .btn-warning {
+        background-color: #ffc107;
+        color: #333;
+      }
+
+      .btn-warning:hover {
+        background-color: #e0a800;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255,193,7,0.4);
+      }
+
+      .btn-danger {
+        background-color: #dc3545;
+        color: white;
+      }
+
+      .btn-danger:hover {
+        background-color: #c82333;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(220,53,69,0.4);
+      }
+
+      form {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #333;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="password"],
+      input[type="date"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-family: inherit;
+        font-size: 14px;
+        transition: border-color 0.3s;
+      }
+
+      input[type="text"]:focus,
+      input[type="email"]:focus,
+      input[type="password"]:focus,
+      input[type="date"]:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+      }
+
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      p {
+        margin-bottom: 10px;
+      }
     </style>
   </head>
 
   <body>
-    <% if notice %>
-      <div class="alert alert-notice">✅ <%= notice %></div>
-    <% end %>
+    <header>
+      <div class="container">
+        <h1>🎬 MyRottenPotatoes</h1>
+      </div>
+    </header>
 
-    <% if alert %>
-      <div class="alert alert-alert">⚠️ <%= alert %></div>
-    <% end %>
+    <div class="main-content">
+      <% if notice %>
+        <div class="alert alert-notice">✅ <%= notice %></div>
+      <% end %>
 
-    <%= yield %>
+      <% if alert %>
+        <div class="alert alert-alert">⚠️ <%= alert %></div>
+      <% end %>
+
+      <div class="container">
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>

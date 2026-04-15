@@ -1,38 +1,41 @@
-<h1>Add New Movie</h1>
+<h2>➕ Add New Movie</h2>
 
-<% if @movie.errors.any? %>
-  <div style="background-color: #fee; border: 1px solid #fcc; border-radius: 4px; padding: 15px; margin-bottom: 20px; color: #c33;">
-    <h3 style="margin-top: 0; color: #c33;">❌ Cannot save the movie:</h3>
-    <ul style="margin: 10px 0;">
-      <% @movie.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+<div style="background: white; border-radius: 8px; padding: 30px; max-width: 600px; margin: 0 auto; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+  <% if @movie.errors.any? %>
+    <div style="background-color: #fee; border: 1px solid #fcc; border-radius: 6px; padding: 15px; margin-bottom: 20px; color: #c33;">
+      <h3 style="margin-top: 0; color: #c33;">❌ Cannot save the movie:</h3>
+      <ul style="margin: 10px 0; padding-left: 20px;">
+        <% @movie.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-<%= form_with model: @movie do |f| %>
+  <%= form_with model: @movie do |f| %>
+    <div style="margin-bottom: 18px;">
+      <label><strong>🎬 Movie Title</strong></label>
+      <%= f.text_field :title, placeholder: "Enter movie title" %>
+    </div>
 
-  <p>
-    <label>Title:</label> <%= f.text_field :title %>
-  </p>
+    <div style="margin-bottom: 18px;">
+      <label><strong>⭐ Rating</strong></label>
+      <%= f.select :rating, (0..5).to_a, { prompt: 'Select a rating (0-5)' } %>
+    </div>
 
-  <p>
-    <label>Rating:</label>
-    <%= f.select :rating, (0..5).to_a, { prompt: 'Select a rating' } %>
-  </p>
+    <div style="margin-bottom: 18px;">
+      <label><strong>📝 Description</strong></label>
+      <%= f.text_area :description, placeholder: "Describe the movie...", style: "min-height: 130px;" %>
+    </div>
 
-  <p>
-    <label>Description:</label> <%= f.text_area :description %>
-  </p>
+    <div style="margin-bottom: 18px;">
+      <label><strong>📅 Release Date</strong></label>
+      <%= f.date_select :release_date %>
+    </div>
 
-  <p>
-    <label>Release Date:</label> <%= f.date_select :release_date %>
-  </p>
-
-  <div style="margin-top: 20px;">
-    <%= f.submit "Save Movie", style: "padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 10px;" %>
-    <%= link_to "Back to Movies", movies_path, style: "padding: 10px 16px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; display: inline-block;" %>
-  </div>
-
-<% end %>
+    <div style="margin-top: 25px; display: flex; gap: 10px;">
+      <input type="submit" value="💾 Save Movie" class="btn btn-success" style="flex: 1;" />
+      <%= link_to "↩️ Back to Movies", movies_path, class: "btn btn-primary", style: "flex: 1; text-align: center;" %>
+    </div>
+  <% end %>
+</div>
