@@ -6,6 +6,23 @@ class MoviesController < ApplicationController
     if params[:rating].present?
       @movies = @movies.where(rating: params[:rating].to_i)
     end
+    
+    case params[:sort]
+    when 'title_asc'
+      @movies = @movies.order(title: :asc)
+    when 'title_desc'
+      @movies = @movies.order(title: :desc)
+    when 'rating_asc'
+      @movies = @movies.order(rating: :asc)
+    when 'rating_desc'
+      @movies = @movies.order(rating: :desc)
+    when 'date_asc'
+      @movies = @movies.order(release_date: :asc)
+    when 'date_desc'
+      @movies = @movies.order(release_date: :desc)
+    else
+      @movies = @movies.order(created_at: :desc)
+    end
   end
 
   def new
