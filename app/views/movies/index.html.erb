@@ -4,11 +4,12 @@
   <%= link_to "➕ Add New Movie", new_movie_path, class: "btn btn-primary" %>
 </div>
 
+<!-- Filter by Rating -->
 <form method="get" action="<%= movies_path %>" style="margin-bottom: 30px;">
-  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 15px; align-items: flex-end;">
+  <div style="display: flex; gap: 15px; align-items: flex-end;">
     <div>
       <label>Filter by Rating:</label>
-      <select name="rating" style="padding: 10px; border-radius: 6px; border: 1px solid #ddd; width: 100%;">
+      <select name="rating" style="padding: 10px; border-radius: 6px; border: 1px solid #ddd;">
         <option value="" <%= 'selected' if params[:rating].blank? %>>All Ratings</option>
         <option value="0" <%= 'selected' if params[:rating].present? && params[:rating].to_i == 0 %>>⭐ 0 stars</option>
         <option value="1" <%= 'selected' if params[:rating].present? && params[:rating].to_i == 1 %>>⭐ 1 star</option>
@@ -18,58 +19,52 @@
         <option value="5" <%= 'selected' if params[:rating].present? && params[:rating].to_i == 5 %>>⭐ 5 stars</option>
       </select>
     </div>
-
     <div>
-      <label>Sort by:</label>
-      <select name="sort" style="padding: 10px; border-radius: 6px; border: 1px solid #ddd; width: 100%;">
-        <option value="" <%= 'selected' if params[:sort].blank? %>>Newest First</option>
-        <option value="title_asc" <%= 'selected' if params[:sort] == 'title_asc' %>>Title (A-Z)</option>
-        <option value="title_desc" <%= 'selected' if params[:sort] == 'title_desc' %>>Title (Z-A)</option>
-        <option value="rating_desc" <%= 'selected' if params[:sort] == 'rating_desc' %>>Rating (High to Low)</option>
-        <option value="rating_asc" <%= 'selected' if params[:sort] == 'rating_asc' %>>Rating (Low to High)</option>
-        <option value="date_desc" <%= 'selected' if params[:sort] == 'date_desc' %>>Release Date (Newest)</option>
-        <option value="date_asc" <%= 'selected' if params[:sort] == 'date_asc' %>>Release Date (Oldest)</option>
-      </select>
-    </div>
-
-    <div style="visibility: hidden;"></div>
-
-    <div>
-      <input type="submit" value="Apply Filters" class="btn btn-success" style="width: 100%; margin-bottom: 0;" />
+      <input type="submit" value="Apply Filter" class="btn btn-success" style="padding: 10px 20px;" />
     </div>
   </div>
 </form>
 
 <% if @movies.any? %>
-  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;">
-    <% @movies.each do |movie| %>
-      <div style="background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; hover {transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0,0,0,0.15);} position: relative;">
-        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
-          <h3 style="margin: 0; color: #333; flex: 1;">
-            <%= link_to movie.title, movie_path(movie), style: "text-decoration: none; color: #667eea; font-size: 18px; font-weight: 600;" %>
-          </h3>
-          <span style="background: #667eea; color: white; padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 14px;">
-            ⭐ <%= movie.rating %>/5
-          </span>
-        </div>
-
-        <% if movie.description.present? %>
-          <p style="color: #666; margin: 12px 0; font-size: 14px;">
-            <%= truncate(movie.description, length: 120) %>
-          </p>
-        <% end %>
-
-        <p style="color: #999; font-size: 13px; margin: 12px 0;">
-          📅 Released: <%= movie.release_date.strftime("%b %d, %Y") if movie.release_date %>
-        </p>
-
-        <div style="display: flex; gap: 8px; margin-top: 15px;">
-          <%= link_to "View", movie_path(movie), class: "btn btn-primary", style: "flex: 1; text-align: center; padding: 8px;" %>
-          <%= link_to "Edit", edit_movie_path(movie), class: "btn btn-warning", style: "flex: 1; text-align: center; padding: 8px;" %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+  <table style="width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+    <thead>
+      <tr style="background: #667eea; color: white;">
+        <th style="padding: 15px; text-align: left; cursor: pointer; user-select: none; <%= 'background: #5568d3;' if @title_header %>">
+          <% title_sort_order = params[:sort_by] == 'title' && params[:sort_order] != 'desc' ? 'desc' : 'asc' %>
+          <%= link_to "Title #{@title_header}", movies_path(sort_by: 'title', sort_order: title_sort_order, rating: params[:rating]), style: "color: white; text-decoration: none; font-weight: bold;" %>
+        </th>
+        <th style="padding: 15px; text-align: left;">Rating</th>
+        <th style="padding: 15px; text-align: left; cursor: pointer; user-select: none; <%= 'background: #5568d3;' if @release_date_header %>">
+          <% date_sort_order = params[:sort_by] == 'release_date' && params[:sort_order] != 'desc' ? 'desc' : 'asc' %>
+          <%= link_to "Release Date #{@release_date_header}", movies_path(sort_by: 'release_date', sort_order: date_sort_order, rating: params[:rating]), style: "color: white; text-decoration: none; font-weight: bold;" %>
+        </th>
+        <th style="padding: 15px; text-align: center;">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @movies.each do |movie| %>
+        <tr style="border-bottom: 1px solid #eee; transition: background 0.2s;">
+          <td style="padding: 15px;">
+            <%= link_to movie.title, movie_path(movie), style: "color: #667eea; text-decoration: none; font-weight: 600;" %>
+          </td>
+          <td style="padding: 15px;">
+            <span style="background: #667eea; color: white; padding: 6px 10px; border-radius: 4px; font-weight: bold;">
+              ⭐ <%= movie.rating %>/5
+            </span>
+          </td>
+          <td style="padding: 15px;">
+            <%= movie.release_date.strftime("%b %d, %Y") if movie.release_date %>
+          </td>
+          <td style="padding: 15px; text-align: center;">
+            <div style="display: flex; gap: 8px; justify-content: center;">
+              <%= link_to "View", movie_path(movie), class: "btn btn-primary", style: "padding: 6px 12px; font-size: 12px;" %>
+              <%= link_to "Edit", edit_movie_path(movie), class: "btn btn-warning", style: "padding: 6px 12px; font-size: 12px;" %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% else %>
   <div style="background: white; border-radius: 8px; padding: 40px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
     <p style="font-size: 18px; color: #666; margin-bottom: 20px;">
