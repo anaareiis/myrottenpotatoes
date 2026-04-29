@@ -44,7 +44,7 @@ This project implements a **complete CRUD** (Create, Read, Update, Delete) syste
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/myrottenpotatoes.git
+git clone https://github.com/anaareiis/My-Rotten-Potatoes
 cd myrottenpotatoes
 ```
 
@@ -273,33 +273,8 @@ This project is licensed under the MIT License.
 
 ## 👨‍💻 Author
 
-Created with ❤️ by a movie enthusiast
+Created with ❤️ by Ana Luísa Reis Nascente (211045688)
 
 ## 📧 Support
 
 For issues, questions, or suggestions, please open an issue in the repository.
-
-## 🎯 Final Improvements (Issue #10)
-
-This project includes several final adjustments and improvements for robustness:
-
-### Input Validation
-- ✅ Title: 2-200 character range with uniqueness check
-- ✅ Description: 10-1000 character limit with real-time counter
-- ✅ Rating: Integer validation (0-5 only)
-- ✅ Release Date: Cannot be in the future, minimum year 1800
-
-### User Experience
-- ✅ Character counter with color feedback for description field
-- ✅ HTML5 form validation (minlength, maxlength, required, date max)
-- ✅ Clear error messages with specific validation details
-- ✅ Consistent UI elements across all pages
-- ✅ Responsive design works on mobile and desktop
-- ✅ Smooth animations and transitions
-
-### Data Integrity
-- ✅ Server-side validation enforces all rules
-- ✅ Client-side validation prevents invalid submissions
-- ✅ Duplicate title prevention with case-insensitive check
-- ✅ Date range validation (1800-today)
-- ✅ Character limit enforcement at database level
