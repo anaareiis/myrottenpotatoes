@@ -13,6 +13,13 @@ A clean and modern Ruby on Rails web application for managing and discovering mo
 - 🎨 **Beautiful UI** - Clean, modern, responsive interface with smooth animations
 - 💬 **Flash Messages** - Success and error notifications with animations
 - 🔒 **Data Validation** - Prevents empty fields, duplicates, and invalid ratings
+- 🧪 **BDD Testing** - Cucumber + Capybara for behavior-driven development (NEW!)
+- 🔎 **TMDb Search** - Search for movies in The Movie Database (NEW!)
+
+## 🧪 BDD Implementation (NEW!)
+
+This project now includes BDD tests with Cucumber. The documentation has been unified in a single file:
+- 📄 [BDD.md](BDD.md) - BDD documentation and instructions
 
 ### Full CRUD Implementation
 

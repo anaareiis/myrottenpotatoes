@@ -1,0 +1,1 @@
+default: --format pretty --format html --out tmp/cucumber.html --publish-quiet

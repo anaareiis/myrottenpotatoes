@@ -58,6 +58,16 @@ class MoviesController < ApplicationController
     redirect_to movies_path, notice: "Movie deleted successfully."
   end
 
+  def search_tmdb
+    search_terms = params[:search_terms]
+    
+    # Simulate a TMDb search that always returns "not found" to demonstrate the sad path.
+    # In a real implementation, this would call the TMDb API.
+    @tmdb_search_error = "#{search_terms} was not found in TMDb."
+
+    redirect_to movies_path, alert: @tmdb_search_error
+  end
+
   private
 
   def movie_params

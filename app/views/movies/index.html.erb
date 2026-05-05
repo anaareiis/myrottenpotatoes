@@ -1,10 +1,21 @@
 <h1>🍿 All Movies</h1>
 
-<div style="margin-bottom: 20px; text-align: right;">
-  <%= link_to "➕ Add New Movie", new_movie_path, class: "btn btn-primary" %>
+<!-- Search TMDb Form -->
+<div style="margin-bottom: 5px; padding: 10px; background: #f5f5f5; border-radius: 8px;">
+  <h3>Search TMDb for a movie</h3>
+  <form method="post" action="<%= search_tmdb_movies_path %>" style="display: flex; gap: 10px;">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <input type="text" name="search_terms" placeholder="Enter movie name..." style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 1px;" />
+    <button type="submit" class="btn btn-info">Search TMDb</button>
+  </form>
+  <% if @tmdb_search_error.present? %>
+    <div style="color: red; margin-top: 10px;">
+      <%= @tmdb_search_error %>
+    </div>
+  <% end %>
 </div>
 
-<!-- Filter by Rating -->
+<!-- Buttons -->
 <form method="get" action="<%= movies_path %>" style="margin-bottom: 30px;">
   <div style="display: flex; gap: 15px; align-items: flex-end;">
     <div>
@@ -21,6 +32,9 @@
     </div>
     <div>
       <input type="submit" value="Apply Filter" class="btn btn-success" style="padding: 10px 20px; margin-bottom: 17px;" />
+    </div>
+    <div style="margin-bottom: 14px; text-align: right; margin-left: auto;">
+      <%= link_to "➕ Add New Movie", new_movie_path, class: "btn btn-primary" %>
     </div>
   </div>
 </form>
